@@ -16,7 +16,7 @@ app.use(express.json())
 
 
 // Usar as rotas que vão ser criadas aqui
-app.use('/eventos', palestranteRouter)
+app.use('/eventos/palestrantes', palestranteRouter)
 
 //404
 app.use((request, response) => {

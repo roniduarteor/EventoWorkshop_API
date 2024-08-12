@@ -5,7 +5,7 @@ import { getPalestrante, postPalestrantes} from "../controllers/palestranteContr
 const router = Router()
 
 //localhost:3333/eventos/palestrantes
-router.get('/palestrantes', getPalestrante)
-router.post('/palestrantes', postPalestrantes)
+router.get('/', getPalestrante)
+router.post('/', postPalestrantes)
 
 export default router;
