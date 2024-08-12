@@ -5,6 +5,8 @@ import path from 'node:path'
 import conn from './config/conn.js'
 
 import './models/palestrantesModel.js'
+import './models/eventoModel.js'
+import './models/participanteModel.js'
 
 import palestranteRouter from './routes/palestrantesRoutes.js'
 
