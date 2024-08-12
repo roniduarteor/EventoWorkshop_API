@@ -1,6 +1,5 @@
 import express from 'express'
 import 'dotenv/config'
-import path from 'node:path'
 
 import conn from './config/conn.js'
 
