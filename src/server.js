@@ -2,8 +2,11 @@ import express from 'express'
 import 'dotenv/config'
 import path from 'node:path'
 
-
 import conn from './config/conn.js'
+
+import './models/palestrantesModel.js'
+
+import palestranteRouter from './routes/palestrantesRoutes.js'
 
 const PORT = process.env.PORT
 
@@ -12,7 +15,7 @@ app.use(express.json())
 
 
 // Usar as rotas que vão ser criadas aqui
-
+app.use('/eventos', palestranteRouter)
 
 //404
 app.use((request, response) => {
