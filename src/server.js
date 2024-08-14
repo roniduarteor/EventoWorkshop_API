@@ -8,6 +8,7 @@ import './models/eventoModel.js'
 import './models/participanteModel.js'
 
 import palestranteRouter from './routes/palestrantesRoutes.js'
+import eventosRoutes from './routes/eventosRoutes.js'
 
 const PORT = process.env.PORT
 
@@ -17,6 +18,7 @@ app.use(express.json())
 
 // Usar as rotas que vão ser criadas aqui
 app.use('/eventos/palestrantes', palestranteRouter)
+app.use('/eventos', eventosRoutes)
 
 //404
 app.use((request, response) => {
