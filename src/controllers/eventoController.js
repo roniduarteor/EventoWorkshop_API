@@ -26,8 +26,8 @@ export const postEventos = (request, response) =>{
 
     const checkSqlData = [
         "titulo",
-        data_evento,
-        "titulo",
+        titulo,
+        "data_evento",
         data_evento
     ]
 
@@ -41,6 +41,7 @@ export const postEventos = (request, response) =>{
             response.status(409).json({message: "Evento já marcado!"})
             return console.log(err)
         }
+        console.log(data)
 
         const evento_id = uuidv4()
 

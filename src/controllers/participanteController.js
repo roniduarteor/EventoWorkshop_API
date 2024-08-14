@@ -13,6 +13,7 @@ export const postParticipantes = (request, response) => {
         response.status(400).json({ message: 'O nome do participante é obrigatório!' })
         return
     }
+
     if (!email) {
         response.status(400).json({ message: 'O email do participante é obrigatório!' })
         return
@@ -27,12 +28,12 @@ export const postParticipantes = (request, response) => {
 
     const checkSqlData = [
         "nome",
-        email,
-        "nome",
+        nome,
+        "email",
         email
     ]
 
-    conn.query(checkSql, checkSqlData, (err, data)=>{
+    conn.query(checkSql, checkSqlData, async (err, data)=>{
         if(err){
             response.status(500).json({message: "Erro ao verificar existência de participantes"})
             return console.error(err)
@@ -42,6 +43,7 @@ export const postParticipantes = (request, response) => {
             response.status(409).json({message: "Participante já cadastrado!"})
             return console.log(err)
         }
+        console.log(data) // ta vindo vazio, por queeee, eu vou endoidar
 
         const participante_id = uuidv4()
 
@@ -85,7 +87,6 @@ export const postParticipantes = (request, response) => {
                     console.error(error)
                 }
             })
-
 
             // response.status(201).json({message: 'Participante cadastrado!'})
         })
