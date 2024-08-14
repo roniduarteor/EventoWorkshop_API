@@ -79,10 +79,6 @@ export const getEventos = (request, response) => {
     inner join palestrantes on evento.palestranteId = palestrantes.palestrante_id
     `
 
-// from onibus
-// inner join linhas on onibus.id_linha = linhas.linha_id
-// inner join motoristas on onibus.id_motorista = motoristas.motorista_id
-
     conn.query(sql, (err, data) => {
         if (err) {
             response.status(500).json({ message: "Erro ao verificar evento existentes" })
@@ -90,6 +86,7 @@ export const getEventos = (request, response) => {
         }
 
         const eventos = data
+        console.log(data)
         response.status(200).json(eventos)
     })
 }
