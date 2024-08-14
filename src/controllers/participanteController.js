@@ -6,8 +6,8 @@ import jwt from 'jsonwebtoken'
 import createUserToken from "../helpers/create-user-token.js"
 import getToken from "../helpers/get-token.js"
 
-export const postParticipantes = async (request, response) => {
-    const { nome, email} = request.body
+export const postParticipantes = (request, response) => {
+    const { nome, email } = request.body
 
     if (!nome) {
         response.status(400).json({ message: 'O nome do participante é obrigatório!' })
