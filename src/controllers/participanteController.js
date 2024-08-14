@@ -66,3 +66,19 @@ export const postParticipantes = (request, response) => {
         })
     })
 }
+
+export const getParticipantes = (request, response) => {
+    const sql = /*sql*/ `
+    select * from participante
+    `
+
+    conn.query(sql, (err, data) => {
+        if (err) {
+            response.status(500).json({ message: "Erro ao verificar participantes existentes" })
+            return console.log(err)
+        }
+
+        const participantes = data
+        response.status(200).json(participantes)
+    })
+}
