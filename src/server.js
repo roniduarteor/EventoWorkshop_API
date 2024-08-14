@@ -6,10 +6,12 @@ import conn from './config/conn.js'
 import './models/palestrantesModel.js'
 import './models/eventoModel.js'
 import './models/participanteModel.js'
+import './models/inscricaoModel.js'
 
 import palestranteRouter from './routes/palestrantesRoutes.js'
 import eventosRoutes from './routes/eventosRoutes.js'
 import participantesRoutes from './routes/participantesRoutes.js'
+import inscricaoRoutes from './routes/inscricaoRoutes.js'
 
 const PORT = process.env.PORT
 
@@ -21,6 +23,7 @@ app.use(express.json())
 app.use('/eventos/palestrantes', palestranteRouter)
 app.use('/eventos', eventosRoutes)
 app.use('/eventos/participantes', participantesRoutes)
+app.use('/eventos', inscricaoRoutes)
 
 //404
 app.use((request, response) => {

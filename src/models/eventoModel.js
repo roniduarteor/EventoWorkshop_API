@@ -10,7 +10,7 @@ const tableEvento = /*sql*/ `
         foreign key (palestranteId) references palestrantes(palestrante_id),
 
         created_at timestamp default current_timestamp,
-        updated_at timestamp default current_timestamp on update current_timestamp
+        updated_aat timestamp default current_timestamp on update current_timestamp
     )
 `
 
