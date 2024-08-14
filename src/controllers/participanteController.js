@@ -1,8 +1,10 @@
 import conn from "../config/conn.js"
 import { v4 as uuidv4 } from 'uuid'
 
+// helpers
+import createUserToken from "../helpers/create-user-token.js"
 
-export const postParticipantes = (request, response) => {
+export const postParticipantes = async (request, response) => {
     const { nome, email} = request.body
 
     if (!nome) {
@@ -61,13 +63,36 @@ export const postParticipantes = (request, response) => {
                 response.status(500).json({message: "Erro ao cadastrar participante"})
                 return console.log(err)
             }
+            
+            //depois de cadastrado preciso fazer uma nova consulta para buscar o usuário
+            const participanteSql = /*sql*/ `select * from participante where ?? = ?`
 
-            response.status(201).json({message: 'Participante cadastrado!'})
+            const participanteData = ["participante_id", participante_id]
+
+            conn.query(participanteSql, participanteData, async (err, data) => {
+                if (err) {
+                    console.error(err)
+                    response.status(500).json({ err: "Erro ao selecionar participante" })
+                    return
+                }
+                const participante = data[0]
+
+                try {
+                    await createUserToken(participante, request, response) // lembrar de colocar o async no começo da função
+                } catch (error) {
+                    console.error(error)
+                }
+            })
+
+
+            // response.status(201).json({message: 'Participante cadastrado!'})
         })
     })
 }
 
 export const getParticipantes = (request, response) => {
+    
+    
     const sql = /*sql*/ `
     select * from participante
     `
