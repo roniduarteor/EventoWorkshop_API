@@ -1,8 +1,10 @@
 import conn from "../config/conn.js"
 import { v4 as uuidv4 } from 'uuid'
+import jwt from 'jsonwebtoken'
 
 // helpers
 import createUserToken from "../helpers/create-user-token.js"
+import getToken from "../helpers/get-token.js"
 
 export const postParticipantes = async (request, response) => {
     const { nome, email} = request.body
@@ -91,19 +93,28 @@ export const postParticipantes = async (request, response) => {
 }
 
 export const getParticipantes = (request, response) => {
-    
-    
-    const sql = /*sql*/ `
-    select * from participante
-    `
+    let participanteAtual
 
-    conn.query(sql, (err, data) => {
-        if (err) {
-            response.status(500).json({ message: "Erro ao verificar participantes existentes" })
-            return console.log(err)
-        }
+    if (request.headers.authorization) {
+        const token = getToken(request)
 
-        const participantes = data
-        response.status(200).json(participantes)
-    })
+        const decoded = jwt.decode(token, "SENHASUPERSEGURA") // função para decodificar o token
+
+        const participanteId = decoded.id
+
+        const checkSql = /*sql*/ `select * from participante where ?? = ?`
+        const checkData = ['participante_id', participanteId]
+        conn.query(checkSql, checkData, (err, data) => {
+            if (err) {
+                console.error(err)
+                response.status(500).json({ err: 'Erro ao verificar participante' })
+                return
+            }
+
+            participanteAtual = data[0]
+            response.status(200).json(participanteAtual)
+        })
+    } else {
+        response.status(500).json({err: "Deu erro ao verificar o usuário"})
+    }
 }
