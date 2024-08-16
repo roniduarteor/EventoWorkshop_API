@@ -76,7 +76,23 @@ export const postFeedback = (request, response) =>{
 
 export const getMaisPopular = (request, response) => {
     const sql = /*sql*/ `
-    select count(participanteId) as "Quantidade de Inscrições", eventoId  from inscricao group by eventoId
+    select count(participanteId) as "Qtd de Inscrições", eventoId from inscricao group by eventoId
+    `
+
+    conn.query(sql, (err, data)=>{
+        if(err){
+            response.status(500).json({message: "Erro ao verificar participantes existentes"})
+            return console.log(err)
+        }
+
+        const participante = data
+        response.status(200).json(participante)
+    })
+}
+
+export const getPalestranteMaisAtivo = (request, response) => {
+    const sql = /*sql*/ `
+    select count(palestranteId) as "Quantidade de Participações", palestranteId  from evento group by palestranteId
     `
 
     conn.query(sql, (err, data)=>{
