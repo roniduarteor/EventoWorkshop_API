@@ -93,7 +93,7 @@ export const postParticipantes = (request, response) => {
     })
 }
 
-export const getParticipantes = (request, response) => {
+export const getParticipanteById = (request, response) => {
     let participanteAtual
 
     if (request.headers.authorization) {
@@ -118,4 +118,20 @@ export const getParticipantes = (request, response) => {
     } else {
         response.status(500).json({err: "Deu erro ao verificar o usuário"})
     }
+}
+
+export const getParticipantes = (request, response) => {
+    const sql = /*sql*/ `
+    select * from participante
+    `
+
+    conn.query(sql, (err, data)=>{
+        if(err){
+            response.status(500).json({message: "Erro ao verificar participantes existentes"})
+            return console.log(err)
+        }
+
+        const participante = data
+        response.status(200).json(participante)
+    })
 }
