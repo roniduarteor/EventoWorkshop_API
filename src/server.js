@@ -7,11 +7,13 @@ import './models/palestrantesModel.js'
 import './models/eventoModel.js'
 import './models/participanteModel.js'
 import './models/inscricaoModel.js'
+import './models/feedbackModel.js'
 
 import palestranteRouter from './routes/palestrantesRoutes.js'
 import eventosRoutes from './routes/eventosRoutes.js'
 import participantesRoutes from './routes/participantesRoutes.js'
 import inscricaoRoutes from './routes/inscricaoRoutes.js'
+import feedbackRoutes from './routes/feedbackRoutes.js'
 
 const PORT = process.env.PORT
 
@@ -24,6 +26,7 @@ app.use('/eventos/palestrantes', palestranteRouter)
 app.use('/eventos', eventosRoutes)
 app.use('/eventos/participantes', participantesRoutes)
 app.use('/eventos', inscricaoRoutes)
+app.use('/eventos', feedbackRoutes)
 
 //404
 app.use((request, response) => {
