@@ -81,12 +81,12 @@ export const getMaisPopular = (request, response) => {
 
     conn.query(sql, (err, data)=>{
         if(err){
-            response.status(500).json({message: "Erro ao verificar participantes existentes"})
+            response.status(500).json({message: "Erro ao verificar quantidade de inscrições nos eventos"})
             return console.log(err)
         }
 
-        const participante = data
-        response.status(200).json(participante)
+         const participante = data
+         response.status(200).json(participante)
     })
 }
 
