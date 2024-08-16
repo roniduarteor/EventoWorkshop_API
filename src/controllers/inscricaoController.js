@@ -65,3 +65,29 @@ export const postInscricao = (request, response) => {
         })
     })
 }
+
+export const getParticipanteInscricoes = (request, response) => {
+    const {participanteId} = request.params
+
+    const sql = /*sql*/ `select * from inscricao where ?? = ?`
+
+    const sqlData = [
+        "participanteId",
+        participanteId
+    ]
+
+    conn.query(sql, sqlData, (err, data)=>{
+        if(err){
+            response.status(500).json({message: "Erro ao buscar inscrções do participante"})
+            return console.log(err)
+        }
+
+        if(data.length === 0){
+            response.status(404).json({message: "Participante não inscrito"})
+            return console.log(err)
+        }
+
+        const participanteInscricoes = data
+        response.status(200).json(participanteInscricoes)
+    })
+}
