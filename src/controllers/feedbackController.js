@@ -73,3 +73,19 @@ export const postFeedback = (request, response) =>{
         })
     })
 }
+
+export const getMaisPopular = (request, response) => {
+    const sql = /*sql*/ `
+    select count(participanteId) as "Quantidade de Inscrições", eventoId  from inscricao group by eventoId
+    `
+
+    conn.query(sql, (err, data)=>{
+        if(err){
+            response.status(500).json({message: "Erro ao verificar participantes existentes"})
+            return console.log(err)
+        }
+
+        const participante = data
+        response.status(200).json(participante)
+    })
+}
