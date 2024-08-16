@@ -91,3 +91,94 @@ export const getEventos = (request, response) => {
         response.status(200).json(eventos)
     })
 }
+
+export const editarEventos = (request, response) => {
+    const {evento_id} = request.params
+    const {titulo, data_evento, palestranteId} = request.body
+
+    if (!titulo) {
+        response.status(400).json({ message: 'O titulo do evento é obrigatório!' })
+        return
+    }
+    if (!data_evento) {
+        response.status(400).json({ message: 'A data do evento é obrigatória!' })
+        return
+    }
+    if (!palestranteId) {
+        response.status(400).json({ message: 'O Id dos palestrantes é obrigatório!' })
+        return
+    }
+
+    const checkSql = /*sql*/ `
+    select * from evento
+    where ?? = ? and
+    ?? = ?
+    `
+
+    const checkSqlData = [
+        "titulo",
+        titulo,
+        "data_evento",
+        data_evento
+    ]
+
+    conn.query(checkSql, checkSqlData, (err, data)=>{
+        if(err){
+            response.status(500).json({message: "Erro ao verificar existência de evento"})
+            return console.error(err)
+        }
+
+        if(data.length > 0){
+            response.status(409).json({message: "Evento já marcado!"})
+            return console.log(err)
+        }
+
+        const updateSql = /*sql*/ `update evento set ?? = ?, ?? = ?, ?? = ? where ?? = ?`
+
+        const updateSqlData = [
+            "titulo",
+            titulo,
+            "data_evento",
+            data_evento,
+            "palestranteId",
+            palestranteId,
+            "evento_id",
+            evento_id,
+        ]
+
+        conn.query(updateSql, updateSqlData, (err)=>{
+            if(err){
+                response.status(500).json({message: "Erro ao atualizar evento"})
+                return console.log(err)
+            }
+
+            response.status(200).json({message: "Evento atualizado!"})
+        })
+    })
+}
+
+export const cancelarEvento = (request, response) => {
+    const {evento_id} = request.params
+
+    const deleteSql = /*sql*/ `delete from evento where ?? = ?`
+
+    const deleteSqlData = [
+        "evento_id",
+        evento_id
+    ]
+
+    conn.query(deleteSql, deleteSqlData, (err, info)=>{
+        if(err){
+            console.error(err)
+            response.status(500).json({message: 'Erro ao deletar evento'})
+            return
+        }
+        console.log(info)
+        if(info.affectedRows === 0){
+            response.status(404).json({messagae: "evento não encontrado"})
+            return
+        }
+
+        response.status(200).json({message: 'Evento cancelado!'})
+    })
+}
