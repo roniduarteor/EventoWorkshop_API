@@ -160,6 +160,21 @@ export const editarEventos = (request, response) => {
 export const cancelarEvento = (request, response) => {
     const {evento_id} = request.params
 
+    const deleteSqlFeedback = /*sql*/ `delete from feedback where ?? = ?`
+
+    const deleteSqlDataFeedback = [
+        "eventoId",
+        evento_id
+    ]
+
+    conn.query(deleteSqlFeedback, deleteSqlDataFeedback, (err)=>{
+        if(err){
+            console.error(err)
+            response.status(500).json({message: 'Erro ao deletar feedback'})
+            return
+        }
+    })
+
     const deleteSql = /*sql*/ `delete from evento where ?? = ?`
 
     const deleteSqlData = [
@@ -179,6 +194,7 @@ export const cancelarEvento = (request, response) => {
             return
         }
 
-        response.status(200).json({message: 'Evento cancelado!'})
+        response.status(200).json({message: "Evento Cancelado!"})
     })
+    
 }
